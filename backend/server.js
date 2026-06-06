@@ -15,17 +15,17 @@ app.use(express.json())
 app.use("/api/users", authRoutes)
 app.use("/api/notes", notesRoutes)
 
-// --- UPDATED PRODUCTION BLOCK ---
+// --- FIXED FOR EXPRESS V5 ---
 if (process.env.NODE_ENV === "production") {
-  // 1. Step out of 'backend' using '../' to find 'frontend/dist'
+  // 1. Serve static files from frontend/dist
   app.use(express.static(path.join(import.meta.dirname, "../frontend/dist")));
 
-  // 2. Catch all routes and serve index.html using import.meta.dirname
-  app.get("*", (req, res) => {
+  // 2. Express v5 catch-all syntax (*catchall)
+  app.get("*catchall", (req, res) => {
     res.sendFile(path.resolve(import.meta.dirname, "../frontend", "dist", "index.html"));
   });
 }
-// ---------------------------------
+// -----------------------------
 
 await connectDB();
 
