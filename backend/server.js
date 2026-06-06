@@ -15,17 +15,20 @@ app.use(express.json())
 app.use("/api/users", authRoutes)
 app.use("/api/notes", notesRoutes)
 
+// --- UPDATED PRODUCTION BLOCK ---
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
-  app.get("/{*splat}", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  // 1. Step out of 'backend' using '../' to find 'frontend/dist'
+  app.use(express.static(path.join(import.meta.dirname, "../frontend/dist")));
+
+  // 2. Catch all routes and serve index.html using import.meta.dirname
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(import.meta.dirname, "../frontend", "dist", "index.html"));
   });
 }
-
+// ---------------------------------
 
 await connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`);
 });
-
