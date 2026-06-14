@@ -48,7 +48,7 @@ const NoteModal = ({ isOpen, onClose, note, onSave }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center z-50">
+    <div className="fixed inset-0 bg-black/30 flex justify-center items-center z-50">
       <div className="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
         <h2 className="text-2xl font-semibold text-white mb-4">
           {note ? "Edit Note" : "Create Note"}
@@ -68,7 +68,6 @@ const NoteModal = ({ isOpen, onClose, note, onSave }) => {
           </div>
           <div>
             <textarea
-              type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Note Description"
